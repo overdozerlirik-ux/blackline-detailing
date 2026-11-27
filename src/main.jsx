@@ -157,63 +157,46 @@ function App() {
               <p>Напишите нам, расскажите о своём автомобиле — поможем подобрать подходящие услуги.</p>
             </div>
 
-            <form
-              className="contact-card"
-              onSubmit={async (e) => {
-                e.preventDefault();
+            
+<form
+  className="contact-card"
+  onSubmit={(e) => {
+    e.preventDefault();
 
-                const formElement = e.currentTarget;
-                const form = new FormData(formElement);
+    const formElement = e.currentTarget;
+    const form = new FormData(formElement);
 
-                const data = {
-                  name: form.get('name'),
-                  phone: form.get('phone'),
-                  car: form.get('car'),
-                  service: form.get('service'),
-                };
+    const name = form.get('name');
 
-                try {
-                  const response = await fetch('http://localhost:3001/api/booking', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                  });
+    alert(
+      `Спасибо, ${name}!\n\nЭто демонстрационная форма сайта BLACKLINE DETAILING. Реальная запись не осуществляется.`
+    );
 
-                  const result = await response.json();
+    formElement.reset();
+  }}
+>
+  <span>ЗАПИСЬ И КОНСУЛЬТАЦИЯ</span>
+  <h3>ОСТАВИТЬ ЗАЯВКУ</h3>
 
-                  if (!response.ok) {
-                    throw new Error(result.error);
-                  }
+  <input name="name" placeholder="Ваше имя" required />
+  <input name="phone" placeholder="Номер телефона" required />
+  <input name="car" placeholder="Марка и модель автомобиля" />
 
-                  alert('Заявка отправлена!');
-                  formElement.reset();
-                } catch (error) {
-                  alert('Не удалось отправить заявку. Попробуйте позже.');
-                  console.error(error);
-                }
-              }}
-            >
-              <span>ЗАПИСЬ И КОНСУЛЬТАЦИЯ</span>
-              <h3>ОСТАВИТЬ ЗАЯВКУ</h3>
+  <select name="service" defaultValue="" required>
+    <option value="" disabled>Выберите услугу</option>
+    <option>Детейлинг-мойка</option>
+    <option>Полировка кузова</option>
+    <option>Защитные покрытия</option>
+    <option>Химчистка салона</option>
+  </select>
 
-              <input name="name" placeholder="Ваше имя" required />
-              <input name="phone" placeholder="Номер телефона" required />
-              <input name="car" placeholder="Марка и модель автомобиля" />
+  <button type="submit" className="button button-orange">
+    Отправить заявку ↗
+  </button>
 
-              <select name="service" defaultValue="" required>
-                <option value="" disabled>Выберите услугу</option>
-                <option>Детейлинг-мойка</option>
-                <option>Полировка кузова</option>
-                <option>Защитные покрытия</option>
-                <option>Химчистка салона</option>
-              </select>
+  <small>Минск · Беларусь</small>
+</form>
 
-              <button type="submit" className="button button-orange">
-                Отправить заявку ↗
-              </button>
-
-              <small>Минск · Беларусь</small>
-            </form>
           </div>
         </section>
       </main>
